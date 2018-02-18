@@ -9,10 +9,8 @@ import edu.emory.mathcs.backport.java.util.Collections;
 public class Utils {
 
 	public static WebDriver driver;
-
 	public Utils() {
-		
-		driver = Hooks.driver;
+	   driver = Hooks.driver;
 	}
 	
 	public static void notSignedIn() {
@@ -26,31 +24,15 @@ public class Utils {
 		}
 	}
 	
-	
-	public static void lowestPriceSort(List<Object> priceList) throws Exception {
+	public static boolean priceSort(List<Object> priceList, String sortOrderBy) throws Exception {
 		
-        //Compares if the numbers included in the list are sorted 
-        List<Object> tmp = priceList;
-        Collections.sort(tmp);
-        boolean sorted = tmp.equals(priceList);
-        if(sorted) {
-        	System.out.println("Items are sorted based on lowest price");
+        List<Object> list = priceList;
+        Collections.sort(list);
+        if(sortOrderBy.equals("Lowest price")) {
+        	return list.equals(priceList); 
         } else {
-        	throw new Exception("Lowest price sorting is broken in search results page");
+        	Collections.reverse(list);
+    	    return list.equals(priceList);
         }
-                
-	}
-
-	public static void highestPriceSort(List<Object> priceList) throws Exception {
-	    //Compares if the numbers included in the list are sorted 
-	    List<Object> tmp = priceList;
-	    Collections.sort(tmp);
-	    Collections.reverse(tmp);
-	    boolean sorted = tmp.equals(priceList);
-	    if(sorted) {
-	    	System.out.println("Items are sorted based on highest price");
-	    } else {
-	    	throw new Exception("Highest price sorting is broken in search results page");
-	    }
 	}
 }

@@ -44,15 +44,15 @@ public class StepDefinitions {
 	@Then("^I get a list of matching results$")
 	public void i_get_a_list_of_matching_results() throws Throwable {
 		PageFactory.initElements(driver, SearchResultsPage.class);
-		assertNotEquals(0, SearchResultsPage.totalResults.getText());
+		assertNotEquals("Total result are zero", 0, SearchResultsPage.totalResults.getText());
 		for (int i= 0; i< SearchResultsPage.searchResults.size(); i++) {
-			assertTrue(SearchResultsPage.resultTitles.get(i).getText().toLowerCase().contains("egg"));
+			assertTrue("Results returned irrelevant items", SearchResultsPage.resultTitles.get(i).getText().toLowerCase().contains("egg"));
 		}
 	}
 	
 	@Then("^the resulting items cards show: postage price, No of bids, price or show BuyItNow tag$")
 	public void the_resulting_items_cards_show_postage_price_noofbid_price_show_buyitnow_tags() throws Throwable  {
-	 	assertEquals(SearchResultsPage.searchResults.size(), SearchResultsPage.shipping.size());
+	 	assertEquals("The results don't have Buy It Now tag", SearchResultsPage.searchResults.size(), SearchResultsPage.shipping.size());
 	}
 	
 	@Then("^I can sort the results by \"([^\"]*)\"$")
@@ -77,9 +77,9 @@ public class StepDefinitions {
 	    	 System.out.println(priceList.get(j));
 	     }
 	     if(sortOrderBy.equals("Lowest price")) {
-	     Utils.lowestPriceSort(priceList);
+	    	 assertTrue("Items are not sorted by Lowest price", Utils.priceSort(priceList, sortOrderBy));
 	     } else {
-	    	 Utils.highestPriceSort(priceList);
+	    	 assertTrue("Items are not sorted by Lowest price", Utils.priceSort(priceList, sortOrderBy));
 	     }
 	}
 	
@@ -92,19 +92,19 @@ public class StepDefinitions {
 	@Then("^all the results shown in the page have the 'Buy it now' tag$")
 	public void all_the_results_shown_in_the_page_have_the_Buy_it_now_tag() throws Throwable {
 		for (int i=0; i<SearchResultsPage.searchResults.size();i++) {
-			assertTrue(SearchResultsPage.buyItNowOrOfferLogo.isDisplayed() || SearchResultsPage.buyItNowLogo.isDisplayed());
+			assertTrue("The results don't have Buy It Now tag", SearchResultsPage.buyItNowOrOfferLogo.isDisplayed() || SearchResultsPage.buyItNowLogo.isDisplayed());
 		}
 	}
 	
 	@Then("^the results show more than one page$")
 	public void the_results_show_more_than_one_page() throws Throwable {
-	      assertTrue(SearchResultsPage.pagination.isDisplayed());
+	      assertTrue("There are no Pages", SearchResultsPage.pagination.isDisplayed());
 	}
 
 	@Then("^the user can navigate through the pages to continue looking at the items$")  
 	public void the_user_can_navigate_through_the_pages_to_continue_looking_at_the_items() throws Throwable {
 		SearchResultsPage.pageNext.click();
-	    assertTrue(SearchResultsPage.itemTitle.isDisplayed());
+	    assertTrue("No more Items", SearchResultsPage.itemTitle.isDisplayed());
 	}
 	
 	@When("^select a specific Category$")
@@ -116,6 +116,6 @@ public class StepDefinitions {
 
 	@Then("^I can verify that the results shown as per the the selected category$")
 	public void i_can_verify_that_the_results_shown_as_par_the_selected_category() throws Throwable {
-	    HomePage.category.getText().equals("Antiques");
+		assertTrue("Category Item not found", HomePage.category.getText().equals("Antiques"));
 	}
 }
