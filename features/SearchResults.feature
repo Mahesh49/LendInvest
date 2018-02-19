@@ -19,7 +19,7 @@
 			Given I navigate to "https://www.ebay.co.uk/"
 			And I am a non-registered customer 
 			When I search for an item
-			And select a specific Category
+			And select a specific Category "Antiques"
 			Then I get a list of matching results
 			And I can verify that the results shown as per the the selected category
 		
